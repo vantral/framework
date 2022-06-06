@@ -1,0 +1,116 @@
+
+
+    <script type="text/javascript" src="/static/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.bundle-4.5.2.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+
+<div id="search_div" class="transitions init-hidden centered">
+	<div class="show-hide">
+	<div class="query_slide">
+		<form id="search_main">
+			<input type="hidden" name="n_words" id="n_words" value="1">
+			<input type="hidden" name="random_seed" id="random_seed" value={{ random_seed }}>
+			<div class="vertical_settings_pane">
+				<a id="show_settings" class="bi bi-gear-fill link_icon" data-tooltip="tooltip" data-placement="bottom" title="Options"></a>
+				<a id="show_history" class="bi bi-clock-history link_icon" data-tooltip="tooltip" data-placement="bottom" title="Query history"></a>
+				{% if generate_dictionary %}
+					<a id="show_dictionary" class="bi bi-journal-bookmark-fill link_icon" data-tooltip="tooltip" data-placement="bottom" title="Show dictionary"></a>
+				{% endif %}
+				{% if keyboards_by_tier != '{}' %}
+					<a id="enable_virtual_keyboard" class="bi bi-keyboard-fill link_icon" data-tooltip="tooltip" data-placement="bottom" title="Virtual keyboard"></a>
+				{% endif %}
+	        </div>
+	        <!-- Tab panes -->
+	        <div class="tab-content">
+				<div class="words_search">
+					<div class="word_search" id="first_word">
+						<div class="word_search_l">
+							<div class="query_word_header"><div class="circle circle_w1"></div>Word_header Number_sign1</div>
+							<div class="autocomplete_word_input_div">
+								<label for="wf1" id="_label_wf1" class="search_label">Word:</label>
+								<input type="text" class="search_input virtual-keyboard word_autocomplete" data-kioskboard-type="keyboard" data-kioskboard-specialcharacters="true" name="wf1" id="wf1"><br>
+							</div>
+							<div class="autocomplete_word_input_div">
+								<label for="lex1" id="_label_lex1" class="search_label">Lemma:</label>
+								<input type="text" class="search_input virtual-keyboard word_autocomplete" data-kioskboard-type="keyboard" data-kioskboard-specialcharacters="true" name="lex1" id="lex1"><br>
+							</div>
+							<label for="gr1" id="_label_gr1" class="search_label">Grammar:</label>
+							<input type="text" class="search_input gram_selector_input" name="gr1" id="gr1"><span class="gram_selector_link bi bi-table" data-field="gr" data-nword="1"></span><br>
+							<input type="hidden" class="search_input" name="w_id1" id="w_id1">
+							<input type="hidden" class="search_input" name="l_id1" id="l_id1">
+							{% if gloss_search_enabled %}
+							<label for="gloss_index1" id="_label_gloss1" class="search_label">Gloss:</label> <input type="text" class="search_input gram_selector_input" name="gloss_index1" id="gloss_index1"><span class="gram_selector_link bi bi-table" data-field="gloss_index" data-nword="1"></span><br>
+							{% endif %}
+							<hr class="separator">
+							<div class="add_word_fields"></div>
+								
+						</div>
+						<div class="word_search_r">
+							<!-- {% if negative_search_enabled %} -->
+							<a class="neg_query bi bi-power" data-tooltip="tooltip" data-placement="right" title="negative_query"></a><br>
+							<!-- {% endif %} -->
+							<a class="word_plus bi bi-plus-circle-fill" data-tooltip="tooltip" data-placement="right" title="add_word"></a><br>
+							<a class="add_minus_stub"></a>
+							<a class="add_distance_stub"></a>
+							<a class="word_expand bi bi-box-arrow-down" data-tooltip="tooltip" data-placement="right" title="more_fields"></a><br>
+							<input type="checkbox" class="hidden_input neg_query_checkbox" name="negq1" id="negq1" onclick="negative_query();">
+						</div>
+					</div>
+				</div>
+				<br>
+				<div>
+					<label for="lang1">Languages:</label>
+					<select class="search_input selectpicker" data-actions-box="true" name="languages" id="lang1" multiple style="display: block !important;" data-actions-box="true" required>
+						{% for i, lang in langs %}
+						<option value="{{ i }}">{{ lang }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			
+			
+		</form>
+		
+
+		<br>
+		<div class="search_buttons">
+			<div class="btn-group">
+			<button type="button" class="btn btn-primary" aria-label="Search sentences" value="Search sentences" id="search_sent">Search sentences</button>
+			<button type="button" class="btn btn-primary" aria-label="Search words" value="Search words" id="search_word" style="padding-right: 5px;">Search words</button>
+			<button type="button" class="btn btn-primary" aria-label="Search lemmata" value="Search lemmata" id="search_lemma" style="padding-left: 5px;">Search lemmata</button>
+			<button type="button" class="btn btn-primary" aria-label="Words statistics" value="Words statistics" title="Words statistics" id="show_word_stat"><span class="stat_w bi bi-bar-chart-line-fill"> </span></button>
+			</div>
+			<button type="button" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="bottom" title="Select subcorpus" value="Select subcorpus" id="search_doc">Select subcorpus</button>
+			<div class="btn-group">
+			<button type="button" class="btn btn-outline-dark bi bi-link-45deg" data-tooltip="tooltip" data-placement="bottom" title="Share this query" id="share_query"></button>
+			<button type="button" class="btn btn-outline-dark bi bi-download" data-tooltip="tooltip" data-placement="bottom" title="Load external query" id="load_query"></button>
+			</div>
+			{% if debug %}
+				<br>
+				<div class="btn-group">
+					<button type="button" class="btn btn-danger btn-test" value="Search sentences (q)" id="search_sent_query">Search sentences (show query)</button>
+					<button type="button" class="btn btn-danger btn-test" value="Search words (q)" id="search_word_query">Search words (show query)</button>
+					<button type="button" class="btn btn-danger btn-test" value="Search lemmata (q)" id="search_lemma_query">Search lemmata (show query)</button>
+					<button type="button" class="btn btn-danger btn-test" value="Search documents (q)" id="search_doc_query">Search documents (show query)</button><br>
+				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-danger btn-test" value="Search sentences (r)" id="search_sent_json">Search sentences (show JSON response)</button>
+					<button type="button" class="btn btn-danger btn-test" value="Search words (r)" id="search_word_json">Search words (show JSON response)</button>
+					<button type="button" class="btn btn-danger btn-test" value="Search lemmata (r)" id="search_lemma_json">Search lemmata (show JSON response)</button>
+					<button type="button" class="btn btn-danger btn-test" value="Search documents (r)" id="search_doc_json">Search documents (show JSON response)</button>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+<button id="hide_query_button" title=Back to search rel="toggle-query_slide"><i id="hide_query_icon" class="bi bi-arrow-bar-up"></i><span id="hide_query_caption">Back to search</span></button>
+<div class="alert alert-warning alert-dismissible fade show" role="alert" id="greeting">
+	{% include "index/greeting_ru.html" ignore missing %}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+</div>
+</div>

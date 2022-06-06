@@ -1,0 +1,92 @@
+<div class="modal fade" id="display_settings" tabindex="-1" role="dialog" aria-labelledby="display_settings_header" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="display_settings_header">Additional search and display options</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="display_settings_body">
+				<div class="settings_div">
+					<div class="settings_column">
+						<div class="row">
+							<label for="page_size" class="col-sm-6 col-form-label">Results per page:</label>
+							<input form="search_main" type="number" name="page_size" id="page_size" value="10" min="1" max="{{ max_page_size }}" class="search_input distance_input">
+						</div>
+						<div class="row">
+							<label for="sort" class="col-sm-6 col-form-label">Sorting:</label>
+							<select form="search_main" name="sort" id="sort" class="search_input">
+								<option value="random" selected>random</option>
+								<option value="wf">by word (word queries)</option>
+								<option value="lemma">by lemma (word queries)</option>
+								<option value="freq">by frequency</option>
+								{% if year_sort_enabled %}
+								<option value="year">by year (decreasing; sentence queries)</option>
+								{% endif %}
+								{% if debug %}
+								<option value="">no sorting</option>
+								{% endif %}
+							</select>
+						</div>
+						<div class="row">
+							<input form="search_main" type="checkbox" name="distance_strict" id="distance_strict" class="row_checkbox" checked>
+							<label for="distance_strict" class="">Word distance requirements are strict</label>
+						</div>
+					</div>
+					<div class="settings_column">
+						<div class="row">
+							<label for="viewing_mode" class="col-sm-6 col-form-label">Viewing mode:</label>
+							<select name="viewing_mode" id="viewing_mode" class="search_input">
+								<option value="standard" {% if default_view == "standard" %}selected{% endif %}>view_standard</option>
+								<option value="glossed" {% if default_view == "glossed" %}selected{% endif %}>view_glossed</option>
+							</select>
+						</div>
+						{% if transliterations and transliterations|length > 1 %}
+						<div class="row">
+							<label for="translit" class="col-sm-6 col-form-label">Transliteration: </label>
+							<select form="search_main" name="translit" id="translit" class="search_input">
+							{% for tr in transliterations %}
+								<option value="{{ tr }}">{{ _('translitname_' + tr) }}</option>
+							{% endfor %}
+							</select>
+						</div>
+						{% endif %}
+						{% if input_methods and input_methods|length > 1 %}
+						<div class="row">
+							<label for="input_method" class="col-sm-6 col-form-label">Character input method: </label>
+							<select form="search_main" name="input_method" id="input_method" class="search_input">
+							{% for im in input_methods %}
+								<option value="{{ im }}">{{ _('inputmethod_' + im) }}</option>
+							{% endfor %}
+							</select>
+						</div>
+						{% endif %}
+					</div>
+					<div class="settings_column_leftalign">
+						<h5>Annotation layers in glossed mode:</h5>
+						<div class="row">
+							<input type="checkbox" name="toggle_lemma" data="lex" class="toggle_glossed_layer row_checkbox" id="toggle_lemma" checked>
+							<label for="toggle_lemma" class="col-sm-6">Lemma</label>
+						</div>
+						<div class="row">
+							<input type="checkbox" name="toggle_grammar" data="gramm" class="toggle_glossed_layer row_checkbox" id="toggle_grammar" checked>
+							<label for="toggle_grammar" class="col-sm-6">Grammar</label>
+						</div>
+						{% if gloss_search_enabled %}
+						<div class="row">
+							<input type="checkbox" name="toggle_gloss" data="gloss" class="toggle_glossed_layer row_checkbox" id="toggle_gloss" checked>
+							<label for="toggle_gloss" class="col-sm-6">Gloss</label>
+						</div>
+						{% endif %}
+						<div class="row">
+							<input type="checkbox" name="toggle_additional_ana_fields" data="field_ana_other" class="toggle_glossed_layer row_checkbox" id="toggle_additional_ana_fields" checked>
+							<label for="toggle_additional_ana_fields" class="col-sm-6">Additional fields</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-success" aria-label="OK" id="display_settings_ok">OK</button>
+			</div>
+		</div>
+	</div>
+</div>

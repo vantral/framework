@@ -1,0 +1,40 @@
+{% if word_fields %}
+	{% for field in word_fields %}
+		<label for="{{ field }}1" id="_label_{{ field }}1" class="search_label">{{ _('wordfield_' + field) | capitalize }}:</label>
+		<input type="text" class="search_input" name="{{ field }}1" id="{{ field }}1">{% if multiple_choice_fields and field in multiple_choice_fields %}<span class="gram_selector_link bi bi-table" data-field="{{ field }}" data-nword="1"></span>{% endif %}<br>
+	{% endfor %}
+{% endif %}
+{% if sentence_meta and sentence_meta|length > 0 %}
+<hr class="separator">
+	{% for field in sentence_meta %}
+		{% if int_meta_fields and field in int_meta_fields %}
+		<label>{{ _('metafield_' + field) | capitalize }}:</label>
+		<input type="number" class="search_input_num" name="sent_meta_{{ field }}__from1" id="sent_meta_{{ field }}__from1">&ndash;<input type="number" class="search_input_num" name="sent_meta_{{ field }}__to1" id="sent_meta_{{ field }}__to1"><br>
+		{% elif sentence_meta_values and field in sentence_meta_values %}
+		<label for="sent_meta_{{ field }}1">{{ _('metafield_' + field) | capitalize }}:</label>
+		<select class="search_input" name="sent_meta_{{ field }}1" id="sent_meta_{{ field }}1"><br>
+			<option value="" {% if "sent_meta_" + field not in default_values %} selected {% endif %}></option>
+			{% for v in sentence_meta_values[field] %}
+			<option value="{{ v }}" {% if "sent_meta_" + field in default_values and default_values["sent_meta_" + field] == v %} selected {% endif %}>{{ _('metavalue_' + v) }}</option>
+			{% endfor %}
+		</select><br>
+		{% else %}
+		<label for="sent_meta_{{ field }}1">{{ _('metafield_' + field) | capitalize }}:</label>
+		<input type="text" class="search_input" name="sent_meta_{{ field }}1" id="sent_meta_{{ field }}1" {% if "sent_meta_" + field in default_values %} value='{{ default_values["sent_meta_" + field] }}' {% endif %}><br>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+<label for="n_ana1">Analyses: </label>
+<select name="n_ana1" id="n_ana1" class="search_input">
+	<option value="any" selected>any number of analyses</option>
+	{% if ambiguous_analyses %}
+	<option value="ambiguous">only ambiguous</option>
+	<option value="nonambiguous">only non-ambiguous</option>
+	<option value="analyzed">only with analysis</option>
+	{% else %}
+	<option value="nonambiguous">only with analysis</option>
+	{% endif %}
+	<option value="none">only without analysis</option>
+</select><br>
+<label for="sentence_index1">Position in sentence: </label>
+<input type="number" name="sentence_index1" id="sentence_index1" value="" placeholder="1" class="search_input distance_input"><br>

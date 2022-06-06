@@ -1,0 +1,31 @@
+<div class="modal fade" id="query_share_dialogue" tabindex="-1" role="dialog" aria-labelledby="query_share_dialogue_header" aria-hidden="true" data-field="gr1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="query_share_dialogue_header">Share query</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="query_share_dialogue_body">
+				<p>If you want to share your query with someone, send them the text you see below. The person who loads this query will see the same results in the same order, unless the corpus has been re-indexed.</p>
+				<div id="query_to_share"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="query_load_dialogue" tabindex="-1" role="dialog" aria-labelledby="query_load_dialogue_header" aria-hidden="true" data-field="gr1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="query_load_dialogue_header">Load query</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="query_load_dialogue_body">
+				<p>Here you can load a corpus query someone sent you. Please enter the query below:</p>
+				<textarea id="query_to_load">{{ query_string }}</textarea>
+				<div class="selector_buttons">
+					<button type="button" class="btn btn-default btn-success" id="query_load_ok">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

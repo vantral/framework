@@ -1,0 +1,18 @@
+<tr>
+	<td>{{ lemma }}</td>
+{% if word_search_display_gr %}
+	<td>{{ gr }}</td>
+{% endif %}
+{% for item in other_fields %}
+    <td>{{ item }}</td>
+{% endfor %}
+	<td>{{ freq }}</td>
+{% if display_freq_rank %}
+	<td>{{ rank | safe }}</td>
+{% endif %}
+	<td>{{ nForms }}</td>
+	<td>{{ nSents }}</td>
+	<td>{{ nDocs }}</td>
+	<td><i class="search_l bi bi-search" data-tooltip="tooltip" data-placement="top" data-lid="{{ lID }}" title="{{ _('Search in corpus') }}"> </span></td>
+	<td><i class="stat_l bi bi-bar-chart-line-fill" data-tooltip="tooltip" data-placement="top" data-lid="{{ lID }}" data-lemma="{{ wfSearch }}" title="{{ _('Show statistics') }}"> </span></td>
+</tr>

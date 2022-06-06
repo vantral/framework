@@ -291,7 +291,7 @@
 
 .sent_results {
 	/* max-height: calc(100vh - 310px); */
-	overflow-y: auto;
+	/* overflow-y: auto; */
 }
 
 .p_highlighted {
@@ -779,7 +779,7 @@ hr.separator {
 
 .search_results_novideo {
 	height: calc(100% - 70px) !important;
-	display: block !important;
+	/* display: block !important; */
 }
 
 #media_div {
@@ -1552,3 +1552,37 @@ svg circle {
 .keyboards_on {
 	border: 1px solid;
 }
+
+.tab {
+	/* overflow: hidden; */
+	max-height: fit-content;
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+	background-color: #f1f1f1;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+	background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+	background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
+  }

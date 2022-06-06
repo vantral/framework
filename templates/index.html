@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="">
+<head>
+	<title>Корпус</title>
+	<link rel="stylesheet" type="text/css" href="static/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/search.css">
+	<link rel="stylesheet" type="text/css" href="static/css/span_styles.css">
+	<link rel="stylesheet" type="text/css" href="static/css/gramm_gloss_selection.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="static/icons-1.4.1/font/bootstrap-icons.css">
+	
+	<script src="static/jquery-3.5.1-dist/jquery-3.5.1.min.js"></script>
+	<script src="static/autocomplete_devbridge/jquery.autocomplete.min.js"></script>
+	<script type='text/javascript' src='static/bootstrap-5.0.0-beta1-dist/js/bootstrap.bundle.min.js'></script>
+	<script type='text/javascript' src='static/js/common_interface_functions.js'></script>
+	<script type='text/javascript' src='static/js/virtual_keyboards.js'></script>
+	<script type='text/javascript' src='static/js/result_parser.js'></script>
+	<script type='text/javascript' src='static/js/json_loaders.js'></script>
+	<script type='text/javascript' src='static/js/query_share_load.js'></script>
+	<script type='text/javascript'>
+		var moreFieldsCaption = "more_fields";
+		var lessFieldsCaption = "fewer_fields";
+		var addDistCaption = "add_distance";
+		var removeWordCaption = "remove_word";
+		var distToWordCaption = "Distance to word #";
+		var fromCaption = "from ";
+		var toCaption = "to ";
+		var selectGrammTagsCaption = "Select combinations of tags";
+		var selectGlossCaption = "Select glosses";
+		var forTheQueryCaption = "the query";
+		var nothingFoundCaption = "Nothing found.";
+		var queryWordCaption = "Query word";
+	</script>
+	<!-- <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet"> -->
+	{% if media %}
+		<link href="static/css/video-js/video-js.css" rel="stylesheet">
+		<link href="static/css/video-js/videojs.markers.min.css" rel="stylesheet">
+		<script src="static/js/video-js/video.min.js"></script>
+		<script src="static/js/video-js/videojs-markers.js"></script>
+	{% if youtube %}
+		<script src="static/js/video-js/videojs-youtube.js"></script>
+	{% endif %}
+	{% endif %}
+	{% if keyboards_by_tier != '{}' %}
+		<link rel="stylesheet" href="static/kioskboard-1.4.0/kioskboard-1.4.0.min.css" />
+		<script src="static/kioskboard-1.4.0/kioskboard-1.4.0.js"></script>
+	{% endif %}
+	{% if not minimalistic %}
+		{% include "head_add.html" ignore missing %}
+	{% endif %}
+</head>
+<body>
+	<div class="box_column">
+{% if not minimalistic %}
+		<div class="row_section_fixed">
+			{% include "header.html" ignore missing %} <!-- user-defined header, if any -->
+		</div>
+{% endif %}
+		<div class="row_section_fixed">
+			{% include "index/corpus_header.html" %} <!-- tsakorpus header: corpus name, interface langauges, help link -->
+		</div>
+		<div class="row_section_fixed">
+			{% include "index/query_area.html" %} <!-- query area: boxes for word search, settings, search buttons -->
+		</div>
+		<div class="row_section_fixed">
+			{% include "index/progress.html" %} <!-- progress bar and mokey GIF -->
+		</div>
+		<div class="row_section_expand">
+			{% include "index/results_area.html" %} <!-- area where the results are displayed -->
+		</div>
+{% if not minimalistic %}
+		<div class="row_section_fixed">
+			{% include "footer.html" ignore missing %} <!-- user-defined footer, if any -->
+		</div>
+{% endif %}
+	</div>
+	{% include "index/hidden_elements.html" %} <!-- modal windows, analysis tooltip etc. -->
+	{% include "modals/query_share_load.html" %}
+	<script src="static/d3/d3.min.js"></script>
+
+	<script type='text/javascript' src='static/js/select_subcorpus.js'></script>
+</body>
+{% if media %}
+	<script>
+	$(function() {
+		$('#res_p').css('width', 'calc(95vw - ' + $('#media_div').width().toString() + 'px)');
+	});
+	</script>
+{% endif %}
+{% if images %}
+	<script>
+	$(function() {
+		$('#res_p').css('width', 'calc(95vw - ' + $('#image_div').width().toString() + 'px)');
+	});
+	</script>
+{% endif %}
+</html>

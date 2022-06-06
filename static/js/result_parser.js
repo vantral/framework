@@ -14,11 +14,41 @@ function print_json(results) {
 
 function print_html(results) {
 	//alert("success" + JSON.stringify(results));
+	cookie = results.match(/<div id="changed_cookie" style="display: none;">(.*?)<\/div>/);
+	if (cookie !== null) {
+		document.cookie = cookie[1];
+	}
+
+	cookie = results.match(/<div id="active_langs" style="display: none;">(.*?)<\/div>/);
+	if (cookie !== null) {
+		document.cookie = cookie[1];
+	}
+
+	active = results.match(/<div id="active" style="display: none;">(.*?)<\/div>/);
+	
 	$('.progress').css('display', 'none');
 	$('#analysis').css('display', 'none');
 	$('#w_id1').val('');
 	$('#l_id1').val('');
-	$("#search_results").html(results);
+	console.log(active[1])
+	console.log(active[1].endsWith('_1') !== true)
+	if (active[1].endsWith('_1') !== true) {
+		console.log(document.getElementById(active[1]))
+		if (document.getElementById(active[1]) !== null) {
+			document.getElementById(active[1]).style.display = "block";
+			$("[id='" + active[1] + "']").html(results);
+		}
+	} else {
+		$("#search_results").html(results);
+		active = active[1].slice(0, active[1].length - 2)
+		console.log(active)
+		if (document.getElementById(active) !== null) {
+			$("#search_results").html(results);
+			console.log(document.getElementById(active))
+			document.getElementById(active).style.display = "block";
+			document.getElementById("header_" + active).className += " active";
+		}
+	};
 	$('#video_prompt').show();
 	toggle_interlinear();
 }
