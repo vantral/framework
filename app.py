@@ -44,6 +44,7 @@ COOKIES = {}
 
 @app.route('/')
 def main_page():
+    print("BEFORE main_page()")
     sessions = []
     for corpus in CORPORA:
         # print(corpus)
@@ -56,16 +57,21 @@ def main_page():
     for i, cookie in enumerate(sessions):
         resp.set_cookie(f'{list(cookie)[0]}_{CORPORA[i][0]}', list(cookie.values())[0])
         resp.set_cookie(f'{CORPORA[i][0]}_page', '1')
-
+    print("AFTER main_page(), result = ", resp)
     return resp
 
 @app.route('/get_word_fields')
 def empty():
-    return ''
+    print("BEFORE empty()")
+    result = ''
+    print("AFTER empty(), result = ", result)
+    return result
 
 
 @app.route('/search_sent')
 def search():
+    print("BEFORE search()")
+
     langs_corp = request.args.getlist('languages')
 
     if not langs_corp:
@@ -96,11 +102,14 @@ def search():
     print(active_langs)
     active_langs = f'<div id="active_langs" style="display: none;">active_langs={active_langs}</div>'
 
-    return active_langs + active + header + ''.join(body)
+    result = active_langs + active + header + ''.join(body)
+    print("AFTER search(), result = ", result)
+    return result
 
 
 @app.route('/search_sent/<page>')
 def pagination(page):
+    print("BEFORE pagination(), page = ", page)
     lang, page = page.split('_')
     corpus = [x for x in CORPORA if x[0] == lang][0]
     base = corpus[1] + 'search_sent/'
@@ -112,15 +121,17 @@ def pagination(page):
         requests.get(base + page, cookies={COOKIES[lang]: session}).text
         )
     active = f'<div id="active" style="display: none;">{corpus[2]}</div>'
-
-    return active + body
+    result = active + body
+    print("AFTER pagination(), page = ", page, ", result = ", result)
+    return result
 
 
 @app.route('/static/img/search_in_progress.gif')
 def wip():
-    print('HELLLLLLo')
-    return send_file('static/img/search_in_progress.gif')
-    return f'<img src="https://i.pinimg.com/originals/33/06/2f/33062f790a002ec09c2f8c65e6ae72f6.gif" />'
+    print('BEFORE wip()')
+    result = send_file('static/img/search_in_progress.gif')
+    print('AFTER wip()')
+    return result
 
 
 if __name__ == '__main__':
