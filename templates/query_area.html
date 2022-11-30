@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Корпус</title>
+<link rel="stylesheet" type="text/css" href="static/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="static/css/search.css">
+<link rel="stylesheet" type="text/css" href="static/css/span_styles.css">
+<link rel="stylesheet" type="text/css" href="static/css/gramm_gloss_selection.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<link rel="stylesheet" type="text/css" href="static/icons-1.4.1/font/bootstrap-icons.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="static/autocomplete_devbridge/jquery.autocomplete.min.js"></script>
+<script type='text/javascript' src='static/bootstrap-5.0.0-beta1-dist/js/bootstrap.bundle.min.js'></script>
+<script type='text/javascript' src='static/js/common_interface_functions.js'></script>
+<script type='text/javascript' src='static/js/virtual_keyboards.js'></script>
+<script type='text/javascript' src='static/js/result_parser.js'></script>
+<script type='text/javascript' src='static/js/json_loaders.js'></script>
+<script type='text/javascript' src='static/js/query_share_load.js'></script>
+<script type='text/javascript'>
+	var moreFieldsCaption = "more_fields";
+	var lessFieldsCaption = "fewer_fields";
+	var addDistCaption = "add_distance";
+	var removeWordCaption = "remove_word";
+	var distToWordCaption = "Distance to word #";
+	var fromCaption = "from ";
+	var toCaption = "to ";
+	var selectGrammTagsCaption = "Select combinations of tags";
+	var selectGlossCaption = "Select glosses";
+	var forTheQueryCaption = "the query";
+	var nothingFoundCaption = "Nothing found.";
+	var queryWordCaption = "Query word";
+</script>
+</head>
+<body>
+<!-- <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet"> -->
+
+<link rel="stylesheet" href="static/kioskboard-1.4.0/kioskboard-1.4.0.min.css" />
+<script src="static/kioskboard-1.4.0/kioskboard-1.4.0.js"></script>
+
+<div class="row_section_fixed">
+	<div id="search_div" class="transitions init-hidden centered">
+		<div class="show-hide">
+		<div class="query_slide">
+			<form id="search_main">
+				<input type="hidden" name="n_words" id="n_words" value="1">
+				<input type="hidden" name="random_seed" id="random_seed" value=124255>
+				<div class="vertical_settings_pane">
+					<a id="show_settings" class="bi bi-gear-fill link_icon" data-tooltip="tooltip" data-placement="bottom" title="Options"></a>
+					<a id="show_history" class="bi bi-clock-history link_icon" data-tooltip="tooltip" data-placement="bottom" title="Query history"></a>
+				</div>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="words_search">
+						<div class="word_search" id="first_word">
+							<div class="word_search_l">
+								<div class="query_word_header"><div class="circle circle_w1"></div>Word#1</div>
+								<div class="autocomplete_word_input_div">
+									<label for="wf1" id="_label_wf1" class="search_label">Word</label>
+									<input type="text" class="search_input virtual-keyboard word_autocomplete" data-kioskboard-type="keyboard" data-kioskboard-specialcharacters="true" name="wf1" id="wf1"><br>
+								</div>
+								<div class="autocomplete_word_input_div">
+									<label for="lex1" id="_label_lex1" class="search_label">Lemma</label>
+									<input type="text" class="search_input virtual-keyboard word_autocomplete" data-kioskboard-type="keyboard" data-kioskboard-specialcharacters="true" name="lex1" id="lex1"><br>
+								</div>
+								<label for="gr1" id="_label_gr1" class="search_label">Grammar</label>
+								<input type="text" class="search_input gram_selector_input" name="gr1" id="gr1"><span class="gram_selector_link bi bi-table" data-field="gr" data-nword="1"></span><br>
+								<input type="hidden" class="search_input" name="w_id1" id="w_id1">
+								<input type="hidden" class="search_input" name="l_id1" id="l_id1">
+								<label for="gloss_index1" id="_label_gloss1" class="search_label">Gloss</label> <input type="text" class="search_input gram_selector_input" name="gloss_index1" id="gloss_index1"><span class="gram_selector_link bi bi-table" data-field="gloss_index" data-nword="1"></span><br>
+							</div>
+							<div class="word_search_r">
+								<a class="neg_query bi bi-power" data-tooltip="tooltip" data-placement="right" title="negative_query"></a><br>
+								<a class="word_plus bi bi-plus-circle-fill" data-tooltip="tooltip" data-placement="right" title="add_word"></a><br>
+								<a class="add_minus_stub"></a>
+								<a class="add_distance_stub"></a>
+								<a class="word_expand bi bi-box-arrow-down" data-tooltip="tooltip" data-placement="right" title="more_fields"></a><br>
+								<input type="checkbox" class="hidden_input neg_query_checkbox" name="negq1" id="negq1" onclick="negative_query();">
+							</div>
+						</div>
+					</div>
+					<br>
+	
+				</div>
+			</form>
+			<br>
+			<div class="search_buttons">
+				<div class="btn-group">
+				<button type="button" class="btn btn-primary" aria-label="Search sentences" value="Search sentences" id="search_sent">Search sentences</button>
+				<button type="button" class="btn btn-primary" aria-label="Search words" value="Search words" id="search_word" style="padding-right: 5px;">Search words</button>
+	
+			</div>
+		</div>
+	
+	</div>
+	</div>
+	</div>
+	<button id="hide_query_button" title=Back_to_search rel="toggle-query_slide">
+		<i id="hide_query_icon" class="bi bi-arrow-bar-up"></i>
+		<span id="hide_query_caption">Back to search</span>
+	</button>
+</div>
+
+<div class="row_section_expand">
+	<div id="lower_part">
+
+		<div id="search_results" class="search_results_novideo">
+	
+		</div>
+	</div>
+</div>
+<script type='text/javascript' src='static/js/word_stats.js'></script>
+
+<!-- Add you own footer here if you'd like to have one -->
+<script type='text/javascript' src='static/js/select_subcorpus.js'></script>
+</body>
+
+	<script>
+	$(function() {
+		$('#res_p').css('width', 'calc(95vw - ' + $('#media_div').width().toString() + 'px)');
+	});
+	</script>
+</html>
