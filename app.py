@@ -122,65 +122,6 @@ def wip():
     return send_file('static/img/search_in_progress.gif')
     return f'<img src="https://i.pinimg.com/originals/33/06/2f/33062f790a002ec09c2f8c65e6ae72f6.gif" />'
 
-# @app.route('/search_sent/<page>')
-# def pagination(page):
-#     langs_corp = request.cookies.get('active_langs').split('$@')
-#     lang, page = page.split('_')
-#     corpus = [x for x in CORPORA if x[0] == lang][0]
-#     base = corpus[1] + 'search_sent/'
-#     session = request.cookies.get(f'{COOKIES[corpus[0]]}_{corpus[0]}')
-    
-#     langs = [x[2] for x in CORPORA if x[0] in langs_corp]
-#     header = [f'<button class="tablinks" id="header_{lang}" onclick="openLang(event, \'{lang}\')">{lang.capitalize()}</button>' for lang in langs]
-#     header = '\n'.join(header)
-#     header = f'<div class="tab"> {header} </div>'
-
-#     sessions = request.cookies
-#     pages = {x:y for x,y in sessions.items() if x.endswith('page')}
-
-#     print(pages)
-
-#     body = []
-    
-#     bases = [f'{x[1]}search_sent/' for x in CORPORA if x[0] in langs_corp]
-#     for i, base in enumerate(bases):
-#         # print(base)
-#         # print({COOKIES[i]: sessions[f'{COOKIES[i]}_{CORPORA[i][0]}']})
-#         if langs_corp[i] == lang:
-#             # print('AAAAAAAAAA')
-#             # print(base +  f'{lang}_{page}')
-#             body.append(
-#                 f'<div id="{langs[i]}" class="tabcontent">' +\
-#                     re.sub(
-#                         r'data-page="(\d+)"',
-#                         f'data-page="{langs_corp[i]}_\g<1>"',
-#                         requests.get(base + page, cookies={COOKIES[langs_corp[i]]: sessions[f'{COOKIES[langs_corp[i]]}_{langs_corp[i]}']}).text,
-#                     ) +\
-#                         '</div>'
-#             )
-#             continue
-#         current_page = sessions[f'{langs_corp[i]}_page']
-#         # print(base + current_page)
-#         body.append(f'<div id="{langs[i]}" class="tabcontent">' +\
-#             re.sub(
-#                 r'data-page="(\d+)"',
-#                 f'data-page="{langs_corp[i]}_\g<1>"',
-#                 requests.get(base + current_page, cookies={COOKIES[langs_corp[i]]: sessions[f'{COOKIES[langs_corp[i]]}_{langs_corp[i]}']}).text
-#                 ) +\
-#                 '</div>')
-
-#     # print(body)
-
-#     # print({f'{COOKIES[CORPORA.index(corpus)]}_{corpus[0]}': session})
-    
-#     active = f'<div id="active" style="display: none;">{corpus[2]}</div>'
-
-#     return active + f'<div id="changed_cookie" style="display: none;">{lang}_page={page}</div>' + header + ''.join(body)
-#     return header + requests.get(base + page, cookies={f'{COOKIES[CORPORA.index(corpus)]}': session}).text
-
-#     return header + '<div id="Adyghe" class="tabcontent">' + requests.get(base_ad + page, cookies={'session': session_ad}).text + '</div>' +\
-#         '<div id="Evenki" class="tabcontent">' + requests.get(base_evk + page, cookies={'session': session_evk}).text + '</div>'
-
 
 if __name__ == '__main__':
     app.run(debug=True)
